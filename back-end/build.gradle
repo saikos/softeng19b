@@ -1,0 +1,46 @@
+plugins {
+    id 'java'                       //for java project
+    id 'war'                        //for generating war (web app archive) files
+    id 'org.gretty' version '3.0.1' //web app development plugin
+}
+
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
+//project.group = ...
+//project.version = ...
+
+repositories {
+    jcenter()
+
+    maven {
+        url "https://maven.restlet.talend.com/"
+    }
+}
+
+dependencies {
+    compile "javax.servlet:javax.servlet-api:3.1.0"          //the Java servlet libraries
+
+    compile "org.restlet.jee:org.restlet:2.4.2"              //for writing RESTful APIs
+    compile "com.google.code.gson:gson:2.8.2"                //json library
+    compile "org.apache.commons:commons-dbcp2:2.7.0"         //db connection pool
+    compile "org.springframework:spring-jdbc:5.2.2.RELEASE"  //spring JDBC classes
+
+    providedRuntime "javax.servlet:javax.servlet-api:3.1.0"  //provided by the servlet container at runtime
+
+    runtime "org.restlet.jee:org.restlet.ext.servlet:2.4.2"  //Servlet adapter for Restlet framework
+
+    runtime "mysql:mysql-connector-java:8.0.18"              //the MySQL JDBC driver
+
+    gretty "mysql:mysql-connector-java:8.0.18"               //make sure it is also available to the grety plugin
+}
+
+gretty {
+    //scanInterval = 0 //disable hot deployment
+    httpEnabled = false
+    httpsEnabled = true
+    httpPort = 8765
+    httpsPort = 8765
+    contextPath = ''
+    //servletContainer = 'tomcat8' //use the default (jetty)
+}

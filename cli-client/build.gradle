@@ -1,0 +1,26 @@
+plugins {
+    // Apply the java plugin to add support for Java
+    id 'java'
+
+    // Apply the application plugin to add support for building a CLI application.
+    id 'application'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    implementation 'info.picocli:picocli:4.1.4'
+}
+
+application {
+    applicationName = "energy_TEAM"
+    mainClassName = 'gr.ntua.ece.softeng19b.cli.App'
+}
+
+run {
+    if(project.hasProperty("args")) {
+        args project.property("args").split()
+    }
+}
