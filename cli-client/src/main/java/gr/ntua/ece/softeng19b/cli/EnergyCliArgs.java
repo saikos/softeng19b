@@ -1,12 +1,9 @@
 package gr.ntua.ece.softeng19b.cli;
 
-import java.util.Arrays;
-import java.util.List;
-
 import static picocli.CommandLine.*;
 
 @Command
-public class CommonCliArgs  {
+public class EnergyCliArgs extends BasicCliArgs {
 
     public enum TimeRes {
         PT15M,
@@ -43,14 +40,5 @@ public class CommonCliArgs  {
         description = "the format of the response; supported values: ${COMPLETION-CANDIDATES} (default is ${DEFAULT-VALUE})."
     )
     protected Format format;
-
-    @Option(
-        names = {"-h", "--help"},
-        usageHelp = true,
-        description = "display this help message")
-    protected boolean usageHelpRequested;
-
-    @Spec
-    protected Model.CommandSpec spec;
 
 }

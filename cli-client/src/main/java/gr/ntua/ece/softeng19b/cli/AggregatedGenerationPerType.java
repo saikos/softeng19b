@@ -1,5 +1,7 @@
 package gr.ntua.ece.softeng19b.cli;
 
+import picocli.CommandLine;
+
 import java.util.concurrent.Callable;
 
 import static picocli.CommandLine.*;
@@ -7,7 +9,7 @@ import static picocli.CommandLine.*;
 @Command(
     name="AggregatedGenerationPerType"
 )
-public class AggregatedGenerationPerType extends CommonCliArgs implements Callable<Integer> {
+public class AggregatedGenerationPerType extends EnergyCliArgs implements Callable<Integer> {
 
     @Option(
         names = "--prodtype",
@@ -20,7 +22,8 @@ public class AggregatedGenerationPerType extends CommonCliArgs implements Callab
     public Integer call() throws Exception {
 
         if (usageHelpRequested) {
-            spec.commandLine().usage(System.out);
+            CommandLine cli = spec.commandLine();
+            cli.usage(cli.getOut());
             return 0;
         }
 
