@@ -31,9 +31,9 @@ public class ActualTotalLoad extends EnergyResource {
         String monthParam = sanitize(getQueryValue("month"));
         String yearParam = sanitize(getQueryValue("year"));
 
-        //Use the EnergyResource.parseXXX methods to parse the dates and implement the required logic
+        //Use the EnergyResource.parseXXX methods to parse the dates and implement the required business logic
         //For the sake of this example, we hard-code a date
-        LocalDate date = LocalDate.of(2019, 10, 01);
+        LocalDate date = LocalDate.of(2019, 10, 1);
 
         //Read the format query parameter
         Format format = parseFormat(getQueryValue("format"));

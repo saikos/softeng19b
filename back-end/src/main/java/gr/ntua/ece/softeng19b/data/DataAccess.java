@@ -38,6 +38,14 @@ public class DataAccess {
         jdbcTemplate = new JdbcTemplate(bds);
     }
 
+    public void accessDataCheck() throws DataAccessException {
+        try {
+            jdbcTemplate.query("select 1", ResultSet::next);
+        } catch (Exception e) {
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
+
 
     public List<ActualTotalLoadForSpecificDay> fetchActualDataLoadForSpecificDate(String areaName,
                                                                                   String resolution,
