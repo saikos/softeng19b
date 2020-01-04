@@ -22,7 +22,12 @@ public class RestfulApp extends Application {
         router.setDefaultMatchingMode(Template.MODE_STARTS_WITH);
         router.setDefaultMatchingQuery(true);
 
-        //All routes accept the following query params: format, year, month, date
+        /*
+         All routes accept the following query params:
+         - format (optional, either json or csv, default is json)
+         - (year, month,   date): only one of three is required, in the ISO-8601 format
+           (YYYY, YYYY-MM, YYYY-MM-DD respectively)
+         */
         router.attach("/ActualTotalLoad/{AreaName}/{Resolution}", ActualTotalLoad.class);
 
 

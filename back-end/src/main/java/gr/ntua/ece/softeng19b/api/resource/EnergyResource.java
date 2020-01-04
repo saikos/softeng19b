@@ -7,10 +7,14 @@ import org.restlet.resource.ServerResource;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.MonthDay;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.Optional;
 
 public class EnergyResource extends ServerResource {
+
 
     private static final String EMPTY_STRING = "";
 
@@ -21,19 +25,16 @@ public class EnergyResource extends ServerResource {
         return optional.orElse(Format.JSON);
     }
 
-    static Integer parseYear(String year) {
-        //TODO: Implement this
-        return 2019;
+    static Integer parseYear(String year) throws NumberFormatException {
+        return Integer.parseInt(year);
     }
 
-    static Integer parseMonth(String month) {
-        //TODO: Implement this
-        return 10;
+    static MonthDay parseMonth(String month) throws DateTimeParseException {
+        return MonthDay.parse(month);
     }
 
-    static Integer parseDay(Integer year, Integer month, String day) {
-        //TODO: Implement this
-        return 1;
+    static LocalDate parseDate(String date) throws DateTimeParseException {
+        return LocalDate.parse(date);
     }
 
 
@@ -50,7 +51,7 @@ public class EnergyResource extends ServerResource {
         return value;
     }
 
-    private static String sanitize(String s) {
+    static String sanitize(String s) {
         return s == null ? EMPTY_STRING : s.trim();
     }
 

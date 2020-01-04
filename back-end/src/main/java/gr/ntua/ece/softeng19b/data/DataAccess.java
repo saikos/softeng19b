@@ -3,9 +3,9 @@ package gr.ntua.ece.softeng19b.data;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import javax.xml.crypto.Data;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class DataAccess {
@@ -39,11 +39,13 @@ public class DataAccess {
     }
 
 
-    public List<ActualTotalLoadForSpecificDay> fetchActualDataLoadForSpecificDay(String areaName,
-                                                                                 String resolution,
-                                                                                 Integer year,
-                                                                                 Integer month,
-                                                                                 Integer day) throws DataAccessException {
+    public List<ActualTotalLoadForSpecificDay> fetchActualDataLoadForSpecificDate(String areaName,
+                                                                                  String resolution,
+                                                                                  LocalDate date) throws DataAccessException {
+
+        Integer year = date.getYear();
+        Integer month = date.getMonthValue();
+        Integer day = date.getDayOfMonth();
 
         Object[] sqlParams = new Object[] {
                 areaName,

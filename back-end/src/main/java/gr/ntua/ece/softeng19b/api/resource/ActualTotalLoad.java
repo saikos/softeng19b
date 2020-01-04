@@ -3,13 +3,13 @@ package gr.ntua.ece.softeng19b.api.resource;
 import gr.ntua.ece.softeng19b.api.Format;
 import gr.ntua.ece.softeng19b.conf.Configuration;
 import gr.ntua.ece.softeng19b.data.ActualTotalLoadForSpecificDay;
-import gr.ntua.ece.softeng19b.data.ActualTotalLoadParams;
 import gr.ntua.ece.softeng19b.data.DataAccess;
 import gr.ntua.ece.softeng19b.data.DataAccessException;
 import org.restlet.data.Status;
 import org.restlet.representation.Representation;
 import org.restlet.resource.ResourceException;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -27,21 +27,23 @@ public class ActualTotalLoad extends EnergyResource {
         String resolution = getMandatoryAttribute("Resolution", "Resolution is missing");
 
         //Read the optional date query parameters
-        Integer year = parseYear(getQueryValue("year"));
-        Integer month = parseMonth(getQueryValue("month"));
-        Integer day = parseDay(year, month, getQueryValue("day"));
+        String dateParam = sanitize(getQueryValue("date"));
+        String monthParam = sanitize(getQueryValue("month"));
+        String yearParam = sanitize(getQueryValue("year"));
+
+        //Use the EnergyResource.parseXXX methods to parse the dates and implement the required logic
+        //For the sake of this example, we hard-code a date
+        LocalDate date = LocalDate.of(2019, 10, 01);
 
         //Read the format query parameter
         Format format = parseFormat(getQueryValue("format"));
 
         try {
-            if (day != null) {
-                List<ActualTotalLoadForSpecificDay> result = dataAccess.fetchActualDataLoadForSpecificDay(
+            if (date != null) {
+                List<ActualTotalLoadForSpecificDay> result = dataAccess.fetchActualDataLoadForSpecificDate(
                         areaName,
                         resolution,
-                        year,
-                        month,
-                        day
+                        date
                 );
                 return format.generateRepresentation(result);
             }
