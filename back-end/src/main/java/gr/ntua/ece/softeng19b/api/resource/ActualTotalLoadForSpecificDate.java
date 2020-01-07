@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * The Restlet resource that deals with the /ActualDataLoad/... payloads.
  */
-public class ActualTotalLoad extends EnergyResource {
+public class ActualTotalLoadForSpecificDate extends EnergyResource {
 
     private final DataAccess dataAccess = Configuration.getInstance().getDataAccess();
 
@@ -26,10 +26,8 @@ public class ActualTotalLoad extends EnergyResource {
         String areaName = getMandatoryAttribute("AreaName", "AreaName is missing");
         String resolution = getMandatoryAttribute("Resolution", "Resolution is missing");
 
-        //Read the optional date query parameters
-        String dateParam = sanitize(getQueryValue("date"));
-        String monthParam = sanitize(getQueryValue("month"));
-        String yearParam = sanitize(getQueryValue("year"));
+        //Read the optional date attribute
+        String dateParam = getAttributeDecoded("date");
 
         //Use the EnergyResource.parseXXX methods to parse the dates and implement the required business logic
         //For the sake of this example, we hard-code a date
@@ -39,19 +37,16 @@ public class ActualTotalLoad extends EnergyResource {
         Format format = parseFormat(getQueryValue("format"));
 
         try {
-            if (date != null) {
-                List<ActualTotalLoadForSpecificDay> result = dataAccess.fetchActualDataLoadForSpecificDate(
-                        areaName,
-                        resolution,
-                        date
-                );
-                return format.generateRepresentation(result);
-            }
-        } catch (DataAccessException e) {
-            throw new ResourceException(Status.SERVER_ERROR_INTERNAL, "Data access exception: " + e.getMessage(), e);
-        }
 
-        throw new ResourceException(Status.SERVER_ERROR_NOT_IMPLEMENTED);
+            List<ActualTotalLoadForSpecificDay> result = dataAccess.fetchActualDataLoadForSpecificDate(
+                    areaName,
+                    resolution,
+                    date
+            );
+            return format.generateRepresentation(result);
+        } catch (Exception e) {
+            throw new ResourceException(Status.SERVER_ERROR_INTERNAL, e.getMessage(), e);
+        }
 
     }
 
