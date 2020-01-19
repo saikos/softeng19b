@@ -1,10 +1,8 @@
 package gr.ntua.ece.softeng19b.cli;
 
+import gr.ntua.ece.softeng19b.client.RestAPI;
 import picocli.CommandLine;
 
-import java.net.URI;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.concurrent.Callable;
 
 import static picocli.CommandLine.Command;
@@ -13,8 +11,6 @@ import static picocli.CommandLine.Command;
     name="HealthCheck"
 )
 public class HealthCheck extends BasicCliArgs implements Callable<Integer> {
-
-    public static final String URL = App.BASE_URL + "/HealthCheck";
 
     @Override
     public Integer call() throws Exception {
@@ -27,12 +23,9 @@ public class HealthCheck extends BasicCliArgs implements Callable<Integer> {
         }
 
         try {
-            HttpRequest request = HttpRequest.newBuilder().uri(URI.create(URL)).build();
-            HttpResponse<String> response = App.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-            cli.getOut().println(response.statusCode());
-            cli.getOut().println(response.body());
+            new RestAPI().healthCheck();
             return 0;
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             cli.getOut().println(e.getMessage());
             e.printStackTrace(cli.getOut());
             return -1;

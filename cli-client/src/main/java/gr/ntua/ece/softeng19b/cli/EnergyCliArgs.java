@@ -1,5 +1,7 @@
 package gr.ntua.ece.softeng19b.cli;
 
+import gr.ntua.ece.softeng19b.client.Format;
+
 import static picocli.CommandLine.*;
 
 @Command
@@ -9,11 +11,6 @@ public class EnergyCliArgs extends BasicCliArgs {
         PT15M,
         PT30M,
         PT60M
-    }
-
-    public enum Format {
-        JSON,
-        CSV
     }
 
     @Option(

@@ -1,5 +1,5 @@
 plugins {
-    id 'java'                       //for java project
+    id 'groovy'                     //for java and groovy projects
     id 'war'                        //for generating war (web app archive) files
     id 'org.gretty' version '3.0.1' //web app development plugin
 }
@@ -19,20 +19,25 @@ repositories {
 }
 
 dependencies {
-    compile "javax.servlet:javax.servlet-api:3.1.0"          //the Java servlet libraries
+    compile project(':data-model')                             //the common entso-e data model
+    compile "javax.servlet:javax.servlet-api:3.1.0"            //the Java servlet libraries
 
-    compile "org.restlet.jee:org.restlet:2.4.2"              //for writing RESTful APIs
-    compile "com.google.code.gson:gson:2.8.2"                //json library
-    compile "org.apache.commons:commons-dbcp2:2.7.0"         //db connection pool
-    compile "org.springframework:spring-jdbc:5.2.2.RELEASE"  //spring JDBC classes
+    compile "org.restlet.jee:org.restlet:2.4.2"                //for writing RESTful APIs
+    compile "org.restlet.jee:org.restlet.ext.fileupload:2.4.2" //for handling file uploads in Restlet
+    compile "com.google.code.gson:gson:2.8.2"                  //json library
+    compile "org.apache.commons:commons-dbcp2:2.7.0"           //db connection pool
+    compile "org.springframework:spring-jdbc:5.2.2.RELEASE"    //spring JDBC classes
 
-    providedRuntime "javax.servlet:javax.servlet-api:3.1.0"  //provided by the servlet container at runtime
+    testCompile project(':rest-api-client')                    //for performing functional tests
+    testCompile 'org.spockframework:spock-core:1.3-groovy-2.5' //spock testing framework
 
-    runtime "org.restlet.jee:org.restlet.ext.servlet:2.4.2"  //Servlet adapter for Restlet framework
+    providedRuntime "javax.servlet:javax.servlet-api:3.1.0"    //provided by the servlet container at runtime
 
-    runtime "mysql:mysql-connector-java:8.0.18"              //the MySQL JDBC driver
+    runtime "org.restlet.jee:org.restlet.ext.servlet:2.4.2"    //Servlet adapter for Restlet framework
 
-    gretty "mysql:mysql-connector-java:8.0.18"               //make sure it is also available to the grety plugin
+    runtime "mysql:mysql-connector-java:8.0.18"                //the MySQL JDBC driver
+
+    gretty "mysql:mysql-connector-java:8.0.18"                 //make sure it is also available to the grety plugin
 }
 
 gretty {
@@ -43,4 +48,6 @@ gretty {
     httpsPort = 8765
     contextPath = ''
     //servletContainer = 'tomcat8' //use the default (jetty)
+
+    integrationTestTask = 'test'
 }

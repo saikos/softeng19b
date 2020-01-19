@@ -11,7 +11,9 @@ repositories {
 }
 
 dependencies {
-    implementation 'info.picocli:picocli:4.1.4'
+    implementation project(':data-model'),
+                   project(':rest-api-client'),
+                   'info.picocli:picocli:4.1.4'
 }
 
 application {

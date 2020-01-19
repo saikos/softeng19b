@@ -2,9 +2,8 @@ package gr.ntua.ece.softeng19b.api.resource;
 
 import gr.ntua.ece.softeng19b.api.Format;
 import gr.ntua.ece.softeng19b.conf.Configuration;
-import gr.ntua.ece.softeng19b.data.ActualTotalLoadForSpecificDay;
+import gr.ntua.ece.softeng19b.data.model.ATLRecordForSpecificDay;
 import gr.ntua.ece.softeng19b.data.DataAccess;
-import gr.ntua.ece.softeng19b.data.DataAccessException;
 import org.restlet.data.Status;
 import org.restlet.representation.Representation;
 import org.restlet.resource.ResourceException;
@@ -38,7 +37,7 @@ public class ActualTotalLoadForSpecificDate extends EnergyResource {
 
         try {
 
-            List<ActualTotalLoadForSpecificDay> result = dataAccess.fetchActualDataLoadForSpecificDate(
+            List<ATLRecordForSpecificDay> result = dataAccess.fetchActualDataLoadForSpecificDate(
                     areaName,
                     resolution,
                     date

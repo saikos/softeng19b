@@ -1,5 +1,6 @@
 package gr.ntua.ece.softeng19b.data;
 
+import gr.ntua.ece.softeng19b.data.model.ATLRecordForSpecificDay;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -47,9 +48,10 @@ public class DataAccess {
     }
 
 
-    public List<ActualTotalLoadForSpecificDay> fetchActualDataLoadForSpecificDate(String areaName,
-                                                                                  String resolution,
-                                                                                  LocalDate date) throws DataAccessException {
+    public List<ATLRecordForSpecificDay> fetchActualDataLoadForSpecificDate(String areaName,
+                                                                                        String resolution,
+                                                                                        LocalDate date)
+            throws DataAccessException {
 
         Integer year = date.getYear();
         Integer month = date.getMonthValue();
@@ -69,7 +71,7 @@ public class DataAccess {
 
         try {
             return jdbcTemplate.query(sqlQuery, sqlParams, (ResultSet rs, int rowNum) -> {
-                ActualTotalLoadForSpecificDay dataLoad = new ActualTotalLoadForSpecificDay();
+                ATLRecordForSpecificDay dataLoad = new ATLRecordForSpecificDay();
                 dataLoad.setAreaName(rs.getString(1)); //get the string located at the 1st column of the result set
                 dataLoad.setYear(rs.getInt(2)); //get the int located at the 2nd column of the result set
                 //...
