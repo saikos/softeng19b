@@ -4,18 +4,22 @@
 
 Παράδειγμα για την εργασία στο μάθημα [Τεχνολογία Λογισμικού](http://courses.softlab.ntua.gr/softeng/2019b/), Χειμερινό εξάμηνο 2019 (softeng19b).
 
-## Δομή φακέλων σε όλα τα projects
+## Δομή φακέλων
 
-Η δομή των φακέλων του παραδείγματος θα πρέπει να ακολουθηθεί και στη δική σας εργασία, ανεξάρτητα του αν θα χρησιμοποιήσετε τις τεχνολογίες του παραδείγματος ή όχι.
+Η υποχρεωτική κοινή δομή των φακέλων του repository (που θα πρέπει να ακολουθηθεί και στη δική σας εργασία, ανεξάρτητα του αν θα χρησιμοποιήσετε τις τεχνολογίες του παραδείγματος ή όχι) περιγράφεται στο έγγραφο των παραδοτέων (βλ. moodle μαθήματος). 
+
+Η δομή των φακέλων στο συγκεκριμένο παράδειγμα είναι η εξής:
 
 * Στον φάκελο `back-end` περιέχεται ο κώδικας του back-end.
 * Στον φάκελο `cli-client` περιέχεται ο κώδικας του command line application.
-* Στον φάκελο `documentation` περιέχεται η τεκμηρίωση της εργασίας (συνολικά).
+* Στον φάκελο `data-model` περιέχεται ο κοινός κώδικας που ορίζει το data-model της εφαρμογής (π.χ. η κλάση [ATLRecordForSpecificDay](data-model/src/main/java/gr/ntua/ece/softeng19b/data/model/ATLRecordForSpecificDay.java), χρησιμοποιείται σε όλα σημεία του κώδικα που πρέπει να γίνει διαχείριση τέτοιων ActualTotalLoad records. To `data-model`, δηλαδή, είναι ένα ξεχωριστό software project, το οποίο περιέχει μια βιβλιοθήκη κώδικα (software library). Η βιβλιοθήκη αυτή (επανα)χρησιμοποιείται απ' όλα τα άλλα software projects του repository.
+* Στον φάκελο `rest-api-client` περιέχεται ο κοινός κώδικας που ενθυλακώνει τις client λειτουργίες του Rest API. Και εδώ έχουμε περίπτωση βιβλιοθήκης, η οποία επαναχρησιμοποιείται από το `cli-client` (για να εκτελεί την επικοινωνία με το `back-end`) και από το ίδιο το `back-end`, ως test dependency για την υλοποίηση των functional tests.
 
 ## Κύριες τεχνολογίες του παραδείγματος
 
 * [Java 11](https://docs.oracle.com/en/java/javase/11/)
 * [Gradle build tool](https://gradle.org/)
+* [Spock testing framework](http://spockframework.org/)
 
 ### Back-end
 
@@ -26,6 +30,10 @@
 ### CLI client
 
 * [Picocli](https://picocli.info)
+
+### Rest api client
+
+* [Wire mock server](http://wiremock.org/)
 
 ## Γρήγορες οδηγίες
 
