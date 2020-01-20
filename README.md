@@ -15,6 +15,10 @@
 * Στον φάκελο `data-model` περιέχεται ο κοινός κώδικας που ορίζει το data-model της εφαρμογής (π.χ. η κλάση [ATLRecordForSpecificDay](data-model/src/main/java/gr/ntua/ece/softeng19b/data/model/ATLRecordForSpecificDay.java), χρησιμοποιείται σε όλα σημεία του κώδικα που πρέπει να γίνει διαχείριση τέτοιων ActualTotalLoad records. To `data-model`, δηλαδή, είναι ένα ξεχωριστό software project, το οποίο περιέχει μια βιβλιοθήκη κώδικα (software library). Η βιβλιοθήκη αυτή (επανα)χρησιμοποιείται απ' όλα τα άλλα software projects του repository.
 * Στον φάκελο `rest-api-client` περιέχεται ο κοινός κώδικας που ενθυλακώνει τις client λειτουργίες του Rest API. Και εδώ έχουμε περίπτωση βιβλιοθήκης, η οποία επαναχρησιμοποιείται από το `cli-client` (για να εκτελεί την επικοινωνία με το `back-end`) και από το ίδιο το `back-end`, ως test dependency για την υλοποίηση των functional tests.
 
+## Διάγραμμα πακέτων (package diagram)
+
+![diagram](package-diagram.png)
+
 ## Κύριες τεχνολογίες του παραδείγματος
 
 * [Java 11](https://docs.oracle.com/en/java/javase/11/)
