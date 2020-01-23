@@ -345,4 +345,27 @@ class RestAPISpecification extends Specification {
         !caller2.isLoggedIn()
     }
 
+    def "T14. Anonymous users cannot access protected resources"() {
+        given:
+        wms.givenThat(
+            get(
+                urlEqualTo("/energy/api/ActualTotalLoad/Greece/PT60M/date/2000-01-02?format=json")
+            ).willReturn(
+                aResponse().withStatus(401)
+            )
+        )
+
+        when:
+        caller2.getActualTotalLoad(
+            "Greece",
+            "PT60M",
+            LocalDate.of(2000, 1, 2),
+            Format.JSON
+        )
+
+        then:
+        ServerResponseException exception = thrown()
+        exception.getStatusCode() == 401
+    }
+
 }
