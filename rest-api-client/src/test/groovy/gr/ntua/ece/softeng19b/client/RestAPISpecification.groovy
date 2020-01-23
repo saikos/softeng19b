@@ -18,6 +18,9 @@ import static com.github.tomakehurst.wiremock.client.WireMock.*
 @Stepwise
 class RestAPISpecification extends Specification {
 
+    private static final String TOKEN1 = "token1"
+    private static final String TOKEN2 = "token2"
+
     private static final int MOCK_SERVER_PORT = 8766
 
     private static final String JSON_PAYLOAD_1 = """
@@ -109,7 +112,7 @@ class RestAPISpecification extends Specification {
             ).withRequestBody(
                 equalTo(ClientHelper.encode([username:"admin", password:"321nimda"]))
             ).willReturn(
-                okJson('{"token":"adminToken"}')
+                okJson("""{"token":"${TOKEN1}"}""")
             )
         )
 
@@ -125,7 +128,10 @@ class RestAPISpecification extends Specification {
         wms.givenThat(
             post(
                 urlEqualTo("/energy/api/Admin/users")
-            ).withRequestBody(
+            ).withHeader(
+                RestAPI.CUSTOM_HEADER, equalTo(TOKEN1)
+            )
+            .withRequestBody(
                 equalTo(ClientHelper.encode([username:"user", email:"user@ntua.gr", password:"4321resu", requestsPerDayQuota:"100"]))
             ).willReturn(
                 okJson('{"username":"user", "email":"user@ntua.gr","requestsPerDayQuota":100}')
@@ -149,7 +155,7 @@ class RestAPISpecification extends Specification {
             ).withRequestBody(
                 equalTo(ClientHelper.encode([username:"user", password:"4321resu"]))
             ).willReturn(
-                okJson('{"token":"userToken"}')
+                okJson("""{"token":"${TOKEN2}"}""")
             )
         )
 
@@ -165,6 +171,8 @@ class RestAPISpecification extends Specification {
         wms.givenThat(
             get(
                 urlEqualTo("/energy/api/ActualTotalLoad/Greece/PT60M/date/2000-01-01?format=json")
+            ).withHeader(
+                RestAPI.CUSTOM_HEADER, equalTo(TOKEN2)
             ).willReturn(
                 okJson(JSON_PAYLOAD_1)
             )
@@ -187,6 +195,8 @@ class RestAPISpecification extends Specification {
         wms.givenThat(
             put(
                 urlEqualTo("/energy/api/Admin/users/user")
+            ).withHeader(
+                RestAPI.CUSTOM_HEADER, equalTo(TOKEN1)
             ).withRequestBody(
                 equalTo(ClientHelper.encode([email:"user@ntua.gr", requestsPerDayQuota:"1"]))
             ).willReturn(
@@ -206,6 +216,8 @@ class RestAPISpecification extends Specification {
         wms.givenThat(
             get(
                 urlEqualTo("/energy/api/ActualTotalLoad/Greece/PT60M/date/2000-01-02?format=json")
+            ).withHeader(
+                RestAPI.CUSTOM_HEADER, equalTo(TOKEN2)
             ).willReturn(
                 aResponse().withStatus(402)
             )
@@ -229,8 +241,10 @@ class RestAPISpecification extends Specification {
         wms.givenThat(
             put(
                 urlEqualTo("/energy/api/Admin/users/user")
+            ).withHeader(
+                RestAPI.CUSTOM_HEADER, equalTo(TOKEN1)
             ).withRequestBody(
-                    equalTo(ClientHelper.encode([email:"user@ntua.gr", requestsPerDayQuota:"10"]))
+                equalTo(ClientHelper.encode([email:"user@ntua.gr", requestsPerDayQuota:"10"]))
             ).willReturn(
                 okJson('{"username":"user", "email":"user@ntua.gr","requestsPerDayQuota":10}')
             )
@@ -248,6 +262,8 @@ class RestAPISpecification extends Specification {
         wms.givenThat(
             post(
                 urlEqualTo("/energy/api/Logout")
+            ).withHeader(
+                RestAPI.CUSTOM_HEADER, equalTo(TOKEN1)
             )
         )
 
@@ -263,6 +279,8 @@ class RestAPISpecification extends Specification {
         wms.givenThat(
             get(
                 urlEqualTo("/energy/api/ActualTotalLoad/Greece/PT60M/date/2000-01-02?format=json")
+            ).withHeader(
+                RestAPI.CUSTOM_HEADER, equalTo(TOKEN2)
             ).willReturn(
                 okJson(JSON_PAYLOAD_2)
             )
@@ -286,6 +304,8 @@ class RestAPISpecification extends Specification {
         wms.givenThat(
             post(
                 urlEqualTo("/energy/api/Admin/ActualTotalLoad")
+            ).withHeader(
+                RestAPI.CUSTOM_HEADER, equalTo(TOKEN2)
             ).withMultipartRequestBody(
                 new MultipartValuePatternBuilder().
                     withName("file").
@@ -300,7 +320,7 @@ class RestAPISpecification extends Specification {
         )
 
         when:
-        ImportResult importResult = caller1.importFile("ActualTotalLoad", Path.of(csv))
+        ImportResult importResult = caller2.importFile("ActualTotalLoad", Path.of(csv))
 
         then:
         importResult.totalRecordsInFile == 2 &&
@@ -313,6 +333,8 @@ class RestAPISpecification extends Specification {
         wms.givenThat(
             post(
                 urlEqualTo("/energy/api/Logout")
+            ).withHeader(
+                RestAPI.CUSTOM_HEADER, equalTo(TOKEN2)
             )
         )
 
