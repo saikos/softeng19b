@@ -1,14 +1,16 @@
 package gr.ntua.ece.softeng19b.api.resource;
 
-import org.restlet.data.Status;
+import gr.ntua.ece.softeng19b.api.representation.JsonMapRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.resource.ResourceException;
+
+import java.util.Collections;
 
 public class Logout extends EnergyResource {
 
     @Override
     protected Representation post(Representation entity) throws ResourceException {
-        //logout the user
-        throw new ResourceException(Status.SERVER_ERROR_NOT_IMPLEMENTED);
+        // This is a dummy logout implementation for the sake of the front-end example app
+        return new JsonMapRepresentation(Collections.emptyMap());
     }
 }
