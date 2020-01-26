@@ -3,7 +3,11 @@ package gr.ntua.ece.softeng19b.api;
 import gr.ntua.ece.softeng19b.api.resource.*;
 import org.restlet.Application;
 import org.restlet.Restlet;
+import org.restlet.data.Method;
+import org.restlet.engine.application.CorsFilter;
 import org.restlet.routing.Router;
+
+import java.util.Set;
 
 public class RestfulApp extends Application {
 
@@ -40,7 +44,11 @@ public class RestfulApp extends Application {
         //Add more datasets
 
 
-        return router;
+        //Enable CORS for all origins (don't use this in a production service)
+        CorsFilter corsFilter = new CorsFilter(getContext(), router);
+        corsFilter.setAllowedOrigins(Set.of("*"));
+        return corsFilter;
     }
+
 
 }
