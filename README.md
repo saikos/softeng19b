@@ -12,10 +12,13 @@
 
 * Στον φάκελο `back-end` περιέχεται ο κώδικας του back-end.
 * Στον φάκελο `cli-client` περιέχεται ο κώδικας του command line application.
-* Στον φάκελο `data-model` περιέχεται ο κοινός κώδικας που ορίζει το data-model της εφαρμογής (π.χ. η κλάση [ATLRecordForSpecificDay](data-model/src/main/java/gr/ntua/ece/softeng19b/data/model/ATLRecordForSpecificDay.java), χρησιμοποιείται σε όλα σημεία του κώδικα που πρέπει να γίνει διαχείριση τέτοιων ActualTotalLoad records. To `data-model`, δηλαδή, είναι ένα ξεχωριστό software project, το οποίο περιέχει μια βιβλιοθήκη κώδικα (software library). Η βιβλιοθήκη αυτή (επανα)χρησιμοποιείται απ' όλα τα άλλα software projects του repository.
+* Στον φάκελο `data-model` περιέχεται ο κοινός κώδικας που ορίζει το data-model της εφαρμογής (π.χ. η κλάση [ATLRecordForSpecificDay](data-model/src/main/java/gr/ntua/ece/softeng19b/data/model/ATLRecordForSpecificDay.java), χρησιμοποιείται σε όλα σημεία του κώδικα που πρέπει να γίνει διαχείριση τέτοιων ActualTotalLoad records). To `data-model`, δηλαδή, είναι ένα ξεχωριστό software project, το οποίο περιέχει μια βιβλιοθήκη κώδικα (software library). Η βιβλιοθήκη αυτή (επανα)χρησιμοποιείται απ' όλα τα άλλα software projects του repository.
 * Στον φάκελο `rest-api-client` περιέχεται ο κοινός κώδικας που ενθυλακώνει τις client λειτουργίες του Rest API. Και εδώ έχουμε περίπτωση βιβλιοθήκης, η οποία επαναχρησιμοποιείται από το `cli-client` (για να εκτελεί την επικοινωνία με το `back-end`) και από το ίδιο το `back-end`, ως test dependency για την υλοποίηση των functional tests.
+* Στον φάκελο `front-end` περιέχεται ο κώδικας της front-end web εφαρμογής.
 
 ## Διάγραμμα πακέτων (package diagram)
+
+Στο διάγραμμα δεν εμφανίζεται το front-end app, καθώς δε μοιράζεται πακέτα με κάποιο από τα υπόλοιπα projects.
 
 ![diagram](package-diagram.png)
 
@@ -38,6 +41,10 @@
 ### Rest api client
 
 * [Wire mock server](http://wiremock.org/)
+
+### Front-end
+* [React](https://reactjs.org/)
+* [CRA (Create-React-App)](https://create-react-app.dev/)
 
 ## Γρήγορες οδηγίες
 
