@@ -28,7 +28,8 @@ export class Login extends Component {
                 "username": u,
                 "password": p
             })
-        }).then(json => {   
+        }).then((response) => response.json())
+        .then(json => {   
             
             console.log(json);
             
@@ -89,6 +90,7 @@ export class Logout extends Component {
         fetch('https://localhost:8765/energy/api/Logout',{
             method: 'POST',
             headers: {
+                'X-OBSERVATORY-AUTH': this.context.username,
                 'Content-Type':'application/x-www-form-urlencoded',
             }
         }).then(() => this.doLogout());
